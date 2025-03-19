@@ -1,29 +1,29 @@
-#include "include/glad/glad.h"
+#include "../include/glad/glad.h"
 
 #include <GLFW/glfw3.h>
 #include <GL/glcorearb.h>
 #include <iostream>
 #include <string>
 
-#include "include/glm/glm.hpp"
-#include "include/glm/gtc/matrix_transform.hpp"
-#include "include/glm/gtc/type_ptr.hpp"
+#include "../include/glm/glm.hpp"
+#include "../include/glm/gtc/matrix_transform.hpp"
+#include "../include/glm/gtc/type_ptr.hpp"
 
-#include "include/shader.h"
+#include "../include/shader.h"
 
-#include "include/loaders/texture_loader.h"
-#include "include/callbacks.h"
-#include "include/input_processing.h"
+#include "../include/loaders/texture_loader.h"
+#include "../include/callbacks.h"
+#include "../include/input_processing.h"
 
-#include "include/glfw_initialize.h"
+#include "../include/glfw_initialize.h"
 
-#include "include/level/level.h"
-#include "include/player/player.h"
-#include "include/player/player_profile.h"
-#include "include/scores/score.h"
-#include "include/player/achievements.h"
-#include "include/enemy/enemy.h"
-#include "include/ui/main_menu.h"
+#include "../include/level/level.h"
+#include "../include/player/player.h"
+#include "../include/player/player_profile.h"
+#include "../include/scores/score.h"
+#include "../include/player/achievements.h"
+#include "../include/enemy/enemy.h"
+#include "../include/ui/main_menu.h"
 
 
 using std::cout;
@@ -60,8 +60,8 @@ int main(void) {
 
 	// build and compile our shader zprogram
 	// ------------------------------------
-	Shader shader("shaders/vertex.glsl",
-			      "shaders/fragment.glsl");
+	Shader shader("../shaders/vertex.glsl",
+			      "../shaders/fragment.glsl");
 
 	// set up vertex data (and buffer(s)) and configure vertex attributes
 	// ------------------------------------------------------------------
@@ -97,7 +97,7 @@ int main(void) {
 	stbi_set_flip_vertically_on_load(true);
 	
 	unsigned int map;
-	TextureLoader tl1("images/2D_topdown.png", map);
+	TextureLoader tl1("../images/2D_topdown.png", map);
 	shader.setInt("map_2d", 0);
 	shader.use();
 	

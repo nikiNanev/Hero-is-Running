@@ -118,6 +118,7 @@ float MainMenu::getStartButtonBorderRadius(){
 
 float MainMenu::getStartButtonBackgroundColor(){
 	//to do
+	return 0.0;
 }
 
 std::string MainMenu::getSettingsButtonText(){
@@ -138,6 +139,7 @@ float MainMenu::getSettingsButtonBorderRadius(){
 
 float MainMenu::getSettingsButtonBackgroundColor(){
 	//to do
+	return 0.0;
 }
 
 std::string MainMenu::getQuitButtonText(){
@@ -158,6 +160,7 @@ float MainMenu::getQuitButtonBorderRadius(){
 
 float MainMenu::getQuitButtonBackgroundColor(){
 	//to do
+	return 0.0;
 }
 
 size_t MainMenu::getPosX(){

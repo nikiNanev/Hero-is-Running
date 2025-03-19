@@ -8,7 +8,6 @@
 #include <iostream>
 
 #include "player_profile.h"
-#include "../risk/risk_profile.h"
 
 class Player {
 	unsigned int id;
@@ -32,11 +31,11 @@ class Player {
 	
 	Score scores;
 	Achievements achievements;
-	RiskProfile riskProfile;
 public:
+	Player(){};
 	Player(unsigned int id, unsigned int health, float damage,
 	       float shieldPoints, float speed, float jumpFactor);
-	~Player();
+	~Player(){};
 	
 	//Setters
 	void setID(unsigned int id);
