@@ -1,29 +1,31 @@
-#include "../include/glad/glad.h"
+#include "glad/glad.h"
 
 #include <GLFW/glfw3.h>
 #include <GL/glcorearb.h>
 #include <iostream>
 #include <string>
+#include <memory>
 
-#include "../include/glm/glm.hpp"
-#include "../include/glm/gtc/matrix_transform.hpp"
-#include "../include/glm/gtc/type_ptr.hpp"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
-#include "../include/shader.h"
+#include "shader.h"
 
-#include "../include/loaders/texture_loader.h"
-#include "../include/callbacks.h"
-#include "../include/input_processing.h"
+#include "loaders/texture_loader.h"
+#include "callbacks.h"
+#include "input_processing.h"
 
-#include "../include/glfw_initialize.h"
+#include "glfw_initialize.h"
 
-#include "../include/level/level.h"
-#include "../include/player/player.h"
-#include "../include/player/player_profile.h"
-#include "../include/scores/score.h"
-#include "../include/player/achievements.h"
-#include "../include/enemy/enemy.h"
-#include "../include/ui/main_menu.h"
+#include "level/level.h"
+#include "player/player.h"
+#include "player/player_profile.h"
+#include "scores/score.h"
+#include "player/achievements.h"
+#include "enemy/enemy.h"
+#include "ui/main_menu.h"
+#include "map/map.h"
 
 
 using std::cout;
@@ -37,10 +39,8 @@ float lastFrame = 0.0f;
 
 const string error_text_glad_initialize = "Failed to initialize GLAD.";
 
-Callbacks *callback = new Callbacks();
-InputProcessing *input = new InputProcessing();
-
-void drawMap(unsigned int planeVAO, unsigned int map);
+auto callback = std::make_unique<Callbacks>();
+auto input = std::make_unique<InputProcessing>();
 
 int main(void) {
 	
@@ -96,21 +96,25 @@ int main(void) {
 	// Load Textures
 	stbi_set_flip_vertically_on_load(true);
 	
-	unsigned int map;
-	TextureLoader tl1("../images/2D_topdown.png", map);
+	unsigned int mapID;
+	TextureLoader tl1("../images/2D_topdown.png", mapID);
 	shader.setInt("map_2d", 0);
 	shader.use();
 	
 	//Load level
-	Level *level = new Level(5);
-	Player *player = new Player(1, 100, 25, 30, 5.0f, 2.0f);
+	auto level = std::make_unique<Level>(5);
+
+	//Load Player
+	auto player = std::make_unique<Player>(1, 100, 25, 30, 5.0f, 2.0f);
 	
 	//Initialize an enemy
-	Enemy *enemy = new Enemy(0, "Buggy", 1, 1);
+	auto enemy = std::make_unique<Enemy>(0, "Buggy", 1, 1);
 	
 	//Score board initialization
-	Score *score = new Score();
+	auto score = std::make_unique<Score>();
 	
+	auto map = std::make_unique<Map>();
+
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(glfwInit->getWindow())) {
@@ -132,7 +136,8 @@ int main(void) {
 		
 		// be sure to activate shader when setting uniforms/drawing
 		shader.use();
-		drawMap(planeVAO, map);
+		
+		map->draw(planeVAO, mapID);
 		// glfw: swap buffers and poll IO events (keys pressed/released,
 		// mouse moved etc.)
 		// -------------------------------------------------------------------------------
@@ -150,13 +155,4 @@ int main(void) {
 	// ------------------------------------------------------------------
 	glfwTerminate();
 	return 0;
-}
-
-void drawMap(unsigned int planeVAO, unsigned int map)
-{
-	// world transformation
-	glBindVertexArray(planeVAO);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, map);
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-}		
+}	

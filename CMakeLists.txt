@@ -28,7 +28,7 @@ list(APPEND INCLUDES "${CMAKE_SOURCE_DIR}/include/")
 message(STATUS "Sources found: ${SOURCES}")
 message(STATUS "Include directories found: ${INCLUDES}")
 
-include_directories(${INCLUDES})
+include_directories(./include)
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include/glad/glad.o GL glfw X11 pthread Xrandr Xi dl m)

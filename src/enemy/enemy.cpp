@@ -10,6 +10,11 @@ Enemy::Enemy(size_t id, std::string name, size_t type, size_t level){
 	this->spawn();
 }
 
+Enemy::~Enemy()
+{
+	
+}
+
 void Enemy::spawn(){
 	//Wave wave = new Wave();
 	this->wave.setID(1);
